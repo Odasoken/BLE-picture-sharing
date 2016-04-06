@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A08BCFD1BF03590000A594A /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A08BCFC1BF03590000A594A /* 1.png */; };
 		3A0B34A81BEB25F500D16050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B34A71BEB25F500D16050 /* AppDelegate.swift */; };
 		3A0B34AA1BEB25F500D16050 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B34A91BEB25F500D16050 /* ViewController.swift */; };
 		3A0B34AD1BEB25F500D16050 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A0B34AB1BEB25F500D16050 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A08BCFC1BF03590000A594A /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		3A0B34A41BEB25F500D16050 /* swiftD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swiftD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0B34A71BEB25F500D16050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A0B34A91BEB25F500D16050 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				3A0B34A91BEB25F500D16050 /* ViewController.swift */,
 				3A0B34AB1BEB25F500D16050 /* Main.storyboard */,
 				3A0B34AE1BEB25F600D16050 /* Assets.xcassets */,
+				3A08BCFC1BF03590000A594A /* 1.png */,
 				3A0B34B01BEB25F600D16050 /* LaunchScreen.storyboard */,
 				3A0B34B31BEB25F600D16050 /* Info.plist */,
 			);
@@ -192,6 +195,7 @@
 				TargetAttributes = {
 					3A0B34A31BEB25F500D16050 = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 6NFMUL554B;
 					};
 					3A0B34B71BEB25F600D16050 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -229,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A0B34B21BEB25F600D16050 /* LaunchScreen.storyboard in Resources */,
+				3A08BCFD1BF03590000A594A /* 1.png in Resources */,
 				3A0B34AF1BEB25F600D16050 /* Assets.xcassets in Resources */,
 				3A0B34AD1BEB25F500D16050 /* Main.storyboard in Resources */,
 			);
@@ -396,6 +401,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = swiftD/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wt.swiftD;
@@ -407,6 +413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = swiftD/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wt.swiftD;
@@ -481,6 +488,7 @@
 				3A0B34CE1BEB25F600D16050 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A0B34CF1BEB25F600D16050 /* Build configuration list for PBXNativeTarget "swiftDTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +497,7 @@
 				3A0B34D11BEB25F600D16050 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A0B34D21BEB25F600D16050 /* Build configuration list for PBXNativeTarget "swiftDUITests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +506,7 @@
 				3A0B34D41BEB25F600D16050 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

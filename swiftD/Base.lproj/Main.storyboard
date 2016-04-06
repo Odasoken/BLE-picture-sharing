@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="swiftD" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +16,67 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.png" translatesAutoresizingMaskIntoConstraints="NO" id="qiz-TA-SYO">
+                                <rect key="frame" x="59" y="64" width="240" height="128"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Dhj-ON-dMG"/>
+                                    <constraint firstAttribute="width" constant="240" id="o1E-Fw-fds"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="nnd-js-24m" appends="YES" id="GVB-Hx-yoI"/>
+                                </connections>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K62-dp-5KR">
+                                <rect key="frame" x="36" y="205" width="92" height="30"/>
+                                <color key="backgroundColor" red="0.38361805006759797" green="1" blue="0.39043018298997856" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="92" id="IdE-CX-7Vk"/>
+                                    <constraint firstAttribute="height" constant="30" id="yHI-w8-BK7"/>
+                                </constraints>
+                                <state key="normal" title="seach Device"/>
+                                <connections>
+                                    <action selector="searchDevice:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6tq-4z-3Me"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bT5-Rl-UHG">
+                                <rect key="frame" x="231" y="205" width="70" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.23422244420757388" blue="0.22876748700595773" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QEI-xW-XU7"/>
+                                    <constraint firstAttribute="width" constant="70" id="Wp5-cA-fp4"/>
+                                </constraints>
+                                <state key="normal" title="Send data"/>
+                                <connections>
+                                    <action selector="sendData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rQ7-nY-jDY"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bT5-Rl-UHG" firstAttribute="leading" secondItem="K62-dp-5KR" secondAttribute="trailing" constant="103" id="6iG-cb-oFV"/>
+                            <constraint firstItem="qiz-TA-SYO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="64" id="MUD-Az-H7b"/>
+                            <constraint firstItem="qiz-TA-SYO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="39" id="VZ6-Os-X3h"/>
+                            <constraint firstItem="K62-dp-5KR" firstAttribute="top" secondItem="qiz-TA-SYO" secondAttribute="bottom" constant="13" id="f0O-mL-4dw"/>
+                            <constraint firstItem="K62-dp-5KR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="tHA-T9-WH2"/>
+                            <constraint firstItem="bT5-Rl-UHG" firstAttribute="top" secondItem="qiz-TA-SYO" secondAttribute="bottom" constant="13" id="vxp-Cd-etA"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="qiz-TA-SYO" id="AkG-0Q-UtE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="nnd-js-24m">
+                    <connections>
+                        <action selector="selectImage:" destination="BYZ-38-t0r" id="hfh-6B-dU2"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="1.png" width="422" height="195"/>
+    </resources>
 </document>
