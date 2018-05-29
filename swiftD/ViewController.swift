@@ -11,11 +11,12 @@ import MultipeerConnectivity
 
 let serviceType = "BBE-SERVICE"
 
-class ViewController: UIViewController , MCSessionDelegate,MCBrowserViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class ViewController: UIViewController , MCSessionDelegate,MCBrowserViewControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate {
     var connectedPeers: [MCPeerID] = []
     var session : MCSession?
     var advertiserAssistant : MCAdvertiserAssistant?
 
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
@@ -25,8 +26,8 @@ class ViewController: UIViewController , MCSessionDelegate,MCBrowserViewControll
 //        colorView.backgroundColor = UIColor.redColor()
 //        colorView.frame = CGRectMake(100, 100, 50, 50)
 //        view.addSubview(colorView)
-        self.childViewControllers;
-        let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+//        self.childViewControllers;
+        let peerID = MCPeerID(displayName: UIDevice.current.name)
         session = MCSession(peer: peerID)
         session?.delegate = self
         advertiserAssistant = MCAdvertiserAssistant.init(serviceType: serviceType, discoveryInfo: nil, session: session!)
@@ -40,42 +41,49 @@ class ViewController: UIViewController , MCSessionDelegate,MCBrowserViewControll
         // Dispose of any resources that can be recreated.
     }
  // MARK:
+    
 
-    @IBAction func searchDevice(sender: AnyObject) {
+    @IBAction func searchDevice(sender: UIButton) {
         advertiserAssistant?.start()
         let blvc = MCBrowserViewController.init(serviceType: serviceType, session: session!)
         blvc.delegate = self
-        self.presentViewController(blvc, animated: true, completion: nil)
+        present(blvc, animated: true, completion: nil)
+        
         
     }
-    @IBAction func sendData(sender: AnyObject) {
+    @IBAction func sendData(sender: UIButton) {
         
         if(connectedPeers.count > 0)
         {
           let peer = self.connectedPeers.first
           let data = UIImagePNGRepresentation(self.imageView.image!)
             do {
-               try  self.session!.sendData(data!, toPeers: Array.init(arrayLiteral: peer!), withMode: MCSessionSendDataMode.Reliable)
+               try session?.send(data!, toPeers: Array.init(arrayLiteral: peer!), with: .reliable)
+                //self.session!.sendData(data!, toPeers: Array.init(arrayLiteral: peer!), withMode: MCSessionSendDataMode.Reliable)
             }catch
             {
                 print("Error occurs while sending data!")
             }
         }   
       
-B
+
     }
-    
-    // MARK: selectImage
-    @IBAction func selectImage(sender: AnyObject) {
-        let ipc = UIImagePickerController.init()
-         ipc.delegate = self
-         self.presentViewController(ipc, animated: true, completion: nil)
+     // MARK: selectImage
+    @IBAction func selectImage(_ sender: UIButton) {
+        let imagePKVc = UIImagePickerController.init()
+        imagePKVc.delegate = self
+        present(imagePKVc, animated: true, completion: nil)
     }
+   
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         self.imageView.image = image;
-        picker .dismissViewControllerAnimated(true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
+   
     
     
     
@@ -90,40 +98,50 @@ B
     - parameter localURL:     <#localURL description#>
     - parameter error:        <#error description#>
     */
-    func session(session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, atURL localURL: NSURL, withError error: NSError?) {
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
         
     }
-    func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        
+   
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         let img = UIImage.init(data: data)
-        self.imageView.image = img!
-        UIImageWriteToSavedPhotosAlbum(img!, self, nil, nil)
+        
+        DispatchQueue.main.async {
+            self.imageView.image = img!
+            UIImageWriteToSavedPhotosAlbum(img!, self, nil, nil)
+        }
         
     }
-    func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
-        
-        if(state == MCSessionState.Connected)
+    
+    
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        if(state == .connected)
         {
             
             if(self.connectedPeers.contains(peerID) == false)
             {
-              self.connectedPeers.append(peerID)
+                self.connectedPeers.append(peerID)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
-
-        }else
+            
+        }else if(self.connectedPeers.contains(peerID) == true)
         {
-            if(self.connectedPeers.contains(peerID) == true)
-            {
-                self.connectedPeers.removeAtIndex(self.connectedPeers.indexOf(peerID)!)
+            self.connectedPeers.remove(at: self.connectedPeers.index(of: peerID)!)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
+    }
+   
+    
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         
     }
-    func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-        
-    }
-    func session(session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, withProgress progress: NSProgress) {
-        
+    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        print("progress:\(progress)")
     }
     
     
@@ -131,23 +149,54 @@ B
     
     // MARK:MCBrowserViewControllerDelegate
     
-    func browserViewController(browserViewController: MCBrowserViewController, shouldPresentNearbyPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) -> Bool {
-        return true;
+    func browserViewController(_ browserViewController: MCBrowserViewController, shouldPresentNearbyPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) -> Bool {
+        return true
     }
     
-    func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
-        browserViewController.dismissViewControllerAnimated(true, completion: nil)
+    
+    
+    func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
+        browserViewController.dismiss(animated: true, completion: nil)
     }
+    
     
     // Notifies delegate that the user taps the cancel button.
-    func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController)
-    {
-        browserViewController.dismissViewControllerAnimated(true, completion: nil)
+    
+    func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
+         browserViewController.dismiss(animated: true, completion: nil)
+    }
+    
+// MARK:
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return connectedPeers.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let ID = ""
+        var cell = tableView.dequeueReusableCell(withIdentifier: ID)
+       if cell == nil {
+        cell = UITableViewCell(style: .default, reuseIdentifier: ID)
+        }
+        
+        let pid = connectedPeers[indexPath.row]
+        cell?.textLabel?.text = String(pid.displayName)
+        
+    
+        
+        
+        return cell!
+        
     }
     
     // MARK:
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Portrait
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask
+        {
+        get{
+            return  .portrait
+        }
     }
+   
+    
+    
+   
 }
